@@ -6,6 +6,11 @@ class Member < ActiveRecord::Base
   has_many :voted_entries, through: :votes, source: :entry
   has_one :image, class_name: "MemberImage", dependent: :destroy
   accepts_nested_attributes_for :image, allow_destroy: true
+  has_many :member_connections, foreign_key: "follower_id", dependent: :destroy
+  has_many :followees, through: :member_connections
+  has_many :reverse_member_connections, class_name: "MemberConnection",
+    foreign_key: "followee_id", dependent: :destroy
+  has_many :followers, through: :reverse_member_connections
 
   validates :number, presence: true,
     numericality: { only_integer: true,

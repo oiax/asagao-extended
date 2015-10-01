@@ -12,4 +12,22 @@ class MemberTest < ActiveSupport::TestCase
     assert_nil Member.authenticate("taro", "lucky")
     assert_equal member, Member.authenticate("taro", "happy")
   end
+
+  test "followees" do
+    taro = FactoryGirl.create(:member, name: "taro")
+    jiro = FactoryGirl.create(:member, name: "jiro")
+    hanako = FactoryGirl.create(:member, name: "hanako")
+    taro.followees << jiro
+    taro.followees << hanako
+    assert_equal 2, taro.followees.count
+  end
+
+  test "followers" do
+    taro = FactoryGirl.create(:member, name: "taro")
+    jiro = FactoryGirl.create(:member, name: "jiro")
+    hanako = FactoryGirl.create(:member, name: "hanako")
+    taro.followers << jiro
+    taro.followers << hanako
+    assert_equal 2, taro.followers.count
+  end
 end

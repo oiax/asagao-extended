@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150305133817) do
+ActiveRecord::Schema.define(version: 20151001144745) do
 
   create_table "articles", force: :cascade do |t|
     t.string   "title",                       null: false
@@ -34,6 +34,16 @@ ActiveRecord::Schema.define(version: 20150305133817) do
   end
 
   add_index "entries", ["member_id"], name: "index_entries_on_member_id"
+
+  create_table "member_connections", force: :cascade do |t|
+    t.integer  "follower_id", null: false
+    t.integer  "followee_id", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "member_connections", ["followee_id"], name: "index_member_connections_on_followee_id"
+  add_index "member_connections", ["follower_id", "followee_id"], name: "index_member_connections_on_follower_id_and_followee_id", unique: true
 
   create_table "member_images", force: :cascade do |t|
     t.integer  "member_id",    null: false
