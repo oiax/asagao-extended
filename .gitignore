@@ -20,4 +20,5 @@
 dump.rdb
 .ruby-version
 /public/assets
+/db/*.sqlite3
 
