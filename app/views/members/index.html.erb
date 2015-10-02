@@ -1,4 +1,8 @@
-<%  page_title = "会員名簿" %>
+<%
+  page_title = "会員名簿"
+  followee_ids = current_member.member_connections
+    .where(followee_id: @members.map(&:id)).pluck(:followee_id)
+ %>
 <h1><%=  page_title %></h1>
 
 <%= form_tag :search_members, method: :get do %>
@@ -16,7 +20,10 @@
   <% @members.each do |member| %>
   <tr>
     <td style="text-align: right"><%= member.number %></td>
-    <td><%= link_to member.name, member %></td>
+    <td>
+      <%= link_to member.name, member %>
+      <%= member.id.in?(followee_ids) ? '（フォロー中）' : '' %>
+    </td>
     <td><%= member.full_name %></td>
   </tr>
   <% end %>
