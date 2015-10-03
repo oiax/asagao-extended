@@ -77,6 +77,13 @@ class EntriesController < ApplicationController
       .paginate(page: params[:page], per_page: 15)
   end
 
+  # フォローしている会員の記事
+  def following
+    @entries = current_member.following_entries.published
+      .order("entries.posted_at DESC")
+      .paginate(page: params[:page], per_page: 15)
+  end
+
   private
   def entry_params
     params.require(:entry).permit(:title, :body, :posted_at, :status)

@@ -39,6 +39,10 @@ class Member < ActiveRecord::Base
     entry && entry.author != self && !votes.exists?(entry_id: entry.id)
   end
 
+  def following_entries
+    Entry.where(member_id: member_connections.pluck(:followee_id))
+  end
+
   private
   def check_email
     if email.present?
