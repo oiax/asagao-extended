@@ -5,16 +5,16 @@ body =
   "6回に試合が動き出し、2点先行されます。" +
   "しかしその裏、畠山の満塁弾に宮本のソロで大逆転！\n" +
   "しかし7回に押本が大乱調、栗原に満塁弾をお返しされてしまいました。"
-%w(Taro Jiro Hana).each do |name|
+%w(Taro Jiro Hana Bill Alex).each_with_index do |name, i|
   member = Member.find_by(name: name)
-  0.upto(9) do |idx|
+  0.upto(9) do |j|
     entry = Entry.create(
       author: member,
-      title: "野球観戦#{idx}",
+      title: "野球観戦#{j}",
       body: body,
-      posted_at: 10.days.ago.advance(days: idx),
-      status: %w(draft member_only public)[idx % 3])
-    if idx == 7 || idx == 8
+      posted_at: 10.days.ago.advance(days: j, hours: i),
+      status: %w(draft member_only public)[j % 3])
+    if j == 7 || j == 8
       %w(John Mike Sophy).each do |name2|
         voter = Member.find_by(name: name2)
         voter.voted_entries << entry
