@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   resources :articles, only: [:index, :show]
   resources :entries do
     member { patch :like, :unlike }
-    collection { get :voted }
+    collection { get :voted, :following }
   end
   resource :session, only: [:create, :destroy]
   resource :account
