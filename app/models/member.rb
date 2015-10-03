@@ -8,6 +8,7 @@ class Member < ActiveRecord::Base
   accepts_nested_attributes_for :image, allow_destroy: true
   has_many :member_connections, foreign_key: "follower_id", dependent: :destroy
   has_many :followees, through: :member_connections
+  has_many :following_entries, through: :followees, source: :entries
   has_many :reverse_member_connections, class_name: "MemberConnection",
     foreign_key: "followee_id", dependent: :destroy
   has_many :followers, through: :reverse_member_connections
@@ -37,10 +38,6 @@ class Member < ActiveRecord::Base
 
   def votable_for?(entry)
     entry && entry.author != self && !votes.exists?(entry_id: entry.id)
-  end
-
-  def following_entries
-    Entry.where(member_id: member_connections.pluck(:followee_id))
   end
 
   private
