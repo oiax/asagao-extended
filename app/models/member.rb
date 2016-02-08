@@ -13,6 +13,10 @@ class Member < ActiveRecord::Base
     foreign_key: "followee_id", dependent: :destroy
   has_many :followers, through: :reverse_member_connections
 
+  before_validation do
+    self.occupation_name = nil if occupation_number != 0
+  end
+
   validates :number, presence: true,
     numericality: { only_integer: true,
       greater_than: 0, less_than: 100, allow_blank: true },
