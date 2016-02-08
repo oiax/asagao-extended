@@ -39,6 +39,25 @@
     </td>
   </tr>
   <tr>
+    <th><%= Member.human_attribute_name(:occupation_number) %></th>
+    <td>
+      <% 1.upto(5) do |n| %>
+      <div>
+        <%= form.radio_button :occupation_number, n %>
+        <%= form.label "occupation_number_#{n}", Member::OCCUPATIONS[n] %>
+      </div>
+      <% end %>
+      <div>
+        <%= form.radio_button :occupation_number, 0 %>
+        <%= form.label "occupation_number_0", Member::OCCUPATIONS[0] %>
+      </div>
+      <div id="occupation-name-form-group">
+        <%= form.label :occupation_name, "具体的に" %>
+        <%= form.text_field :occupation_name %>
+      </div>
+    </td>
+  </tr>
+  <tr>
     <th><%= form.label :birthday, for: "member_birthday_1i" %></th>
     <td><%= form.date_select :birthday,
               start_year: 1940, end_year: Time.now.year,
