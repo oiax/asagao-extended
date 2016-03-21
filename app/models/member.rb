@@ -35,8 +35,9 @@ class Member < ActiveRecord::Base
     length: { maximum: 20 }
 
   OCCUPATIONS = {
-    0 => 'その他', 1 => '会社員・会社役員', 2 => '自営業・自由業',
-    3 => '公務員', 4 => '学生', 5 => '無職' }
+    1 => '会社員・会社役員', 2 => '自営業・自由業',
+    3 => '公務員', 4 => '学生', 5 => '無職',
+    0 => 'その他' }
 
   attr_accessor :password, :password_confirmation
 

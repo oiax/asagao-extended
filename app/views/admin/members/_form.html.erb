@@ -41,19 +41,19 @@
   <tr>
     <th><%= Member.human_attribute_name(:occupation_number) %></th>
     <td>
-      <% 1.upto(5) do |n| %>
+      <% Member::OCCUPATIONS.each_key do |n| %>
       <div>
-        <%= form.radio_button :occupation_number, n %>
-        <%= form.label "occupation_number_#{n}", Member::OCCUPATIONS[n] %>
+        <label>
+          <%= form.radio_button :occupation_number, n %>
+          <%= Member::OCCUPATIONS[n] %>
+        </label>
       </div>
       <% end %>
-      <div>
-        <%= form.radio_button :occupation_number, 0 %>
-        <%= form.label "occupation_number_0", Member::OCCUPATIONS[0] %>
-      </div>
       <div id="occupation-name-form-group">
-        <%= form.label :occupation_name, "具体的に" %>
-        <%= form.text_field :occupation_name %>
+        <label>
+          具体的に
+          <%= form.text_field :occupation_name %>
+        </label>
       </div>
     </td>
   </tr>
