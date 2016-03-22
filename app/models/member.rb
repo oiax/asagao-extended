@@ -27,6 +27,12 @@ class Member < ActiveRecord::Base
   validates :password, presence: { on: :create },
     confirmation: { allow_blank: true }
 
+  validates :other_job, length: { maximum: 10 }, presence: true, if: :otherjob?
+
+  def otherjob?
+    job == "その他"
+  end
+
   attr_accessor :password, :password_confirmation
 
   def password=(val)
@@ -39,6 +45,15 @@ class Member < ActiveRecord::Base
   def votable_for?(entry)
     entry && entry.author != self && !votes.exists?(entry_id: entry.id)
   end
+
+  enum job: {
+    "会社員・会社役員": 1,
+    "自営業・自由業": 2,
+    "公務員": 3,
+    "学生": 4,
+    "無職": 5,
+    "その他": 0
+  }
 
   private
   def check_email

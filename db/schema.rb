@@ -11,71 +11,73 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151001144745) do
+ActiveRecord::Schema.define(version: 20160321082858) do
 
   create_table "articles", force: :cascade do |t|
-    t.string   "title",                       null: false
-    t.text     "body",                        null: false
-    t.datetime "released_at",                 null: false
+    t.string   "title",       limit: 255,                   null: false
+    t.text     "body",        limit: 65535,                 null: false
+    t.datetime "released_at",                               null: false
     t.datetime "expired_at"
-    t.boolean  "member_only", default: false, null: false
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.boolean  "member_only",               default: false, null: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
   end
 
   create_table "entries", force: :cascade do |t|
-    t.integer  "member_id",                    null: false
-    t.string   "title",                        null: false
-    t.text     "body"
-    t.datetime "posted_at",                    null: false
-    t.string   "status",     default: "draft", null: false
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.integer  "member_id",  limit: 4,                       null: false
+    t.string   "title",      limit: 255,                     null: false
+    t.text     "body",       limit: 65535
+    t.datetime "posted_at",                                  null: false
+    t.string   "status",     limit: 255,   default: "draft", null: false
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
   end
 
-  add_index "entries", ["member_id"], name: "index_entries_on_member_id"
+  add_index "entries", ["member_id"], name: "index_entries_on_member_id", using: :btree
 
   create_table "member_connections", force: :cascade do |t|
-    t.integer  "follower_id", null: false
-    t.integer  "followee_id", null: false
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "follower_id", limit: 4, null: false
+    t.integer  "followee_id", limit: 4, null: false
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
-  add_index "member_connections", ["followee_id"], name: "index_member_connections_on_followee_id"
-  add_index "member_connections", ["follower_id", "followee_id"], name: "index_member_connections_on_follower_id_and_followee_id", unique: true
+  add_index "member_connections", ["followee_id"], name: "index_member_connections_on_followee_id", using: :btree
+  add_index "member_connections", ["follower_id", "followee_id"], name: "index_member_connections_on_follower_id_and_followee_id", unique: true, using: :btree
 
   create_table "member_images", force: :cascade do |t|
-    t.integer  "member_id",    null: false
-    t.binary   "data"
-    t.string   "content_type"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.integer  "member_id",    limit: 4,     null: false
+    t.binary   "data",         limit: 65535
+    t.string   "content_type", limit: 255
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
-  add_index "member_images", ["member_id"], name: "index_member_images_on_member_id"
+  add_index "member_images", ["member_id"], name: "index_member_images_on_member_id", using: :btree
 
   create_table "members", force: :cascade do |t|
-    t.integer  "number",                          null: false
-    t.string   "name",                            null: false
-    t.string   "full_name"
-    t.string   "email"
+    t.integer  "number",          limit: 4,                   null: false
+    t.string   "name",            limit: 255,                 null: false
+    t.string   "full_name",       limit: 255
+    t.string   "email",           limit: 255
     t.date     "birthday"
-    t.integer  "gender",          default: 0,     null: false
-    t.boolean  "administrator",   default: false, null: false
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-    t.string   "hashed_password"
+    t.integer  "gender",          limit: 4,   default: 0,     null: false
+    t.boolean  "administrator",               default: false, null: false
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.string   "hashed_password", limit: 255
+    t.integer  "job",             limit: 4
+    t.string   "other_job",       limit: 255
   end
 
   create_table "votes", force: :cascade do |t|
-    t.integer  "entry_id",   null: false
-    t.integer  "member_id",  null: false
+    t.integer  "entry_id",   limit: 4, null: false
+    t.integer  "member_id",  limit: 4, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "votes", ["entry_id"], name: "index_votes_on_entry_id"
-  add_index "votes", ["member_id"], name: "index_votes_on_member_id"
+  add_index "votes", ["entry_id"], name: "index_votes_on_entry_id", using: :btree
+  add_index "votes", ["member_id"], name: "index_votes_on_member_id", using: :btree
 
 end
