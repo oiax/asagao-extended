@@ -91,14 +91,10 @@
       $('.other_job_text').hide();
   });
 
-  // $("#get_button").click( function() {
-  //     var radioVal = $("input[name='radio_test']:checked").val();
-  //     alert(radioVal);
-  // });
-  //
-
-// $("input[name='job']:checked").val( function () {
-//   $(".other_job_text").hide("slow");
-// });
-
+  $( 'input[name="account[job]"]:radio' ).change( function() {
+    if ($(this).val() === 'その他')
+      $(".other_job_text").show("slow");
+    else
+      $(".other_job_text").hide("slow");
+  });
 </script>
