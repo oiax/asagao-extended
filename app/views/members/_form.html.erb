@@ -39,25 +39,17 @@
     </td>
   </tr>
   <tr>
-    <th><%= Member.human_attribute_name(:job) %></th>
-    <td>
-      <%= form.radio_button :job, "会社員・会社役員" %>
-      <%= form.label :job_0 %><br>
-      <%= form.radio_button :job, "自営業・自由業" %>
-      <%= form.label :job_1 %><br>
-      <%= form.radio_button :job, "公務員" %>
-      <%= form.label :job_2 %><br>
-      <%= form.radio_button :job, "学生" %>
-      <%= form.label :job_3 %><br>
-      <%= form.radio_button :job, "無職" %>
-      <%= form.label :job_4 %><br>
-      <%= form.radio_button :job, "その他" %>
-      <%= form.label :job_5 %><br>
-      <div class="other_job_text">
-        <%= form.label "具体的に" %>
-        <%= form.text_field :other_job %></div>
-    </td>
-  </tr>
+  <th><%= Member.human_attribute_name(:job) %></th>
+  <td>
+    <% Member.jobs.each_key do |name| %>
+    <div>
+      <%= form.radio_button :job, name %>
+      <%= form.label name %>
+    </div>
+    <% end %>
+    <div class="other_job_text"><%= form.text_field :other_job %></div>
+  </td>
+</tr>
   <tr>
     <th><%= form.label :birthday, for: "member_birthday_1i" %></th>
     <td><%= form.date_select :birthday,
@@ -98,10 +90,15 @@
   $(function() {
       $('.other_job_text').hide();
   });
-  $('input[name="member[job]"]').change( function() {
-  if ($(this).val() === 'その他')
-    $(".other_job_text").show("slow");
-  else
-    $(".other_job_text").hide("slow");
-  });
+
+  // $("#get_button").click( function() {
+  //     var radioVal = $("input[name='radio_test']:checked").val();
+  //     alert(radioVal);
+  // });
+  //
+
+// $("input[name='job']:checked").val( function () {
+//   $(".other_job_text").hide("slow");
+// });
+
 </script>
