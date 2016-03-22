@@ -39,6 +39,18 @@
     </td>
   </tr>
   <tr>
+  <th><%= Member.human_attribute_name(:job) %></th>
+  <td>
+    <% Member.jobs.each_key do |name| %>
+    <div>
+      <%= form.radio_button :job, name %>
+      <%= form.label name %>
+    </div>
+    <% end %>
+    <div class="other_job_text"><%= form.text_field :other_job %></div>
+  </td>
+</tr>
+  <tr>
     <th><%= form.label :birthday, for: "member_birthday_1i" %></th>
     <td><%= form.date_select :birthday,
               start_year: 1940, end_year: Time.now.year,
@@ -71,3 +83,18 @@
 <% unless @member.new_record? %>
 <p>パスワードを変更しないときは、パスワード入力欄を空にしてください。</p>
 <% end %>
+
+
+
+<script>
+  $(function() {
+      $('.other_job_text').hide();
+  });
+
+  $( 'input[name="account[job]"]:radio' ).change( function() {
+    if ($(this).val() === 'その他')
+      $(".other_job_text").show("slow");
+    else
+      $(".other_job_text").hide("slow");
+  });
+</script>

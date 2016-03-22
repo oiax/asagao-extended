@@ -13,6 +13,8 @@ ja:
         gender: 性別
         gender_0: 男
         gender_1: 女
+        job: 職業
+        other_job: その他、職業欄
         birthday: 誕生日
         email: メールアドレス
         administrator: 管理者
